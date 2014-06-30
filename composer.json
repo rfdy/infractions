@@ -1,0 +1,22 @@
+{
+    "name": "rfd/infractions",
+    "type": "phpbb-extension",
+    "description": "Infraction extension for phpBB 3.1",
+    "homepage": "http://www.redflagdeals.com",
+    "version": "0.0.1",
+    "time": "2014-04-04",
+    "license": "MIT",
+    "authors": [{
+        "name": "RFDY",
+        "email": "email@email.com",
+        "homepage": "https://area51.phpbb.com/phpBB/memberlist.php?mode=viewprofile&u=111583",
+        "role": "Developer"
+    }],
+    "require": {
+        "php": ">=5.3.3",
+        "phpbb/phpbb": "3.1.*@dev"
+    },
+    "extra": {
+        "display-name": "Infractions"
+    }
+}

@@ -1,0 +1,35 @@
+ <!-- INCLUDE mcp_header.html -->
+
+<form method="post" id="mcp" action="{U_POST_ACTION}">
+
+<h2>Issue infraction</h2>
+
+<div class="panel">
+	<div class="inner">
+
+	<h3>Select user</h3>
+
+	<fieldset>
+	<dl>
+		<dt><label for="username">{L_SELECT_USER}{L_COLON}</label></dt>
+		<dd><input name="username" id="username" type="text" class="inputbox" required /></dd>
+		<dd><strong><a href="{U_FIND_USERNAME}" onclick="find_username(this.href); return false;">{L_FIND_USERNAME}</a></strong></dd>
+	</dl>
+
+	</fieldset>
+
+	</div>
+</div>
+
+<fieldset class="submit-buttons">
+    <input type="submit" name="submituser" value="{L_SUBMIT}" class="button1" />
+    <input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp;
+	{S_FORM_TOKEN}
+</fieldset>
+</form>
+
+ {% include "infractions_list.html" with { "infractions" : MOD_ISSUED, "display_user_links" : true, "show_cancel_col" : false, "header_name" : "Recent Infractions Issued By You " } only %}
+
+ {% include "infractions_list.html" with { "infractions" : ALL_ISSUED, "display_user_links" : true, "show_cancel_col" : false, "header_name" : "Recent Infractions" } only %}
+
+<!-- INCLUDE mcp_footer.html -->

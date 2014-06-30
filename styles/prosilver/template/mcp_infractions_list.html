@@ -1,0 +1,27 @@
+<!-- INCLUDE mcp_header.html -->
+
+<form method="post" id="mcp" action="{U_POST_ACTION}">
+
+<h2>User Infractions</h2>
+
+    <div class="panel">
+        <div class="inner">
+            <h3>Select User</h3>
+            <fieldset>
+                <dl>
+                    <dt><label for="username">{L_SELECT_USER}{L_COLON}</label></dt>
+                    <dd>
+                        <input name="username" value ="{SEARCH_USERNAME}" id="username" type="text" class="inputbox"/>
+                    </dd>
+                    <dd><input type="submit" name="submituser" value="Search" class="button1" />
+                        <strong><a href="{U_FIND_USERNAME}" onclick="find_username(this.href); return false;">{L_FIND_USERNAME}</a></strong>
+                    </dd>
+                </dl>
+            </fieldset>
+        </div>
+    </div>
+</form>
+
+{% include "infractions_list.html" with { "infractions" : USER_INFRACTIONS, "display_user_links" : true, "show_cancel_col" : S_CAN_REMOVE } %}
+
+<!-- INCLUDE mcp_footer.html -->

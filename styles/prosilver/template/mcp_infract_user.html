@@ -1,0 +1,183 @@
+<!-- INCLUDE mcp_header.html -->
+
+<form method="post" id="mcp" action="{U_POST_ACTION}" xmlns="http://www.w3.org/1999/html">
+
+<h2>Issue Infraction</h2>
+
+<div class="panel">
+	<div class="inner">
+
+	<h3>{USERNAME_FULL}</h3>
+
+	<div>
+		<div class="column1">
+			<!-- IF AVATAR_IMG --><div>{AVATAR_IMG}</div><!-- ENDIF -->
+		</div>
+
+		<div class="column2">
+			<dl class="details">
+				<!-- IF RANK_TITLE --><dt>{L_RANK}{L_COLON}</dt><dd>{RANK_TITLE}</dd><!-- ENDIF -->
+				<!-- IF RANK_IMG --><dt><!-- IF RANK_TITLE -->&nbsp;<!-- ELSE -->{L_RANK}{L_COLON}<!-- ENDIF --></dt><dd>{RANK_IMG}</dd><!-- ENDIF -->
+				<dt>{L_JOINED}{L_COLON}</dt><dd>{JOINED}</dd>
+				<dt>{L_TOTAL_POSTS}{L_COLON}</dt><dd>{POSTS}</dd>
+                <dt>Infraction Points{L_COLON}</dt><dd>{INFRACTION_POINTS}</dd>
+			</dl>
+		</div>
+	</div>
+
+	</div>
+</div>
+    {% if HAS_INFRACTED %}
+        <div class="panel">
+            <span style="color:red"><strong>{L_MULTIPLE_INFRACTIONS}</strong></span>
+        </div>
+    {% endif %}
+    {% if POST_TEXT %}
+        <div class="panel">
+            <div class="inner">
+                 <h3>Post</h3>
+                 <blockquote></br></br>
+                     {POST_TEXT}
+                 </blockquote>
+             </div>
+        </div>
+    {% endif %}
+    {% if ERROR.points || ERROR.expire || ERROR.title %}
+    <div class="panel">
+        <span style="color:red"><strong>{L_MISSING_FIELDS}</strong></span>
+    </div>
+    {% endif %}
+    <div class="panel">
+        <div class="inner">
+            <h3>Issue Infraction</h3>
+
+            <p>Select from an existing infraction then adjust as needed, or enter a custom infraction.</p>
+
+            <fieldset>
+                <dl>
+                    <dt><label for="infraction">Infraction{L_COLON}</label>
+                        <br>
+                        <span>Choose an Infraction that you wish to issue to this user.</span>
+                    </dt>
+
+                    <dd>
+                        <select name="infraction" id="infraction" onchange="changeDropBox()" value="{{ INFRACTION_TYPE }}">
+                            <option value="0">Custom Infraction &hellip;</option>
+                            {% for infraction in INFRACTIONS %}
+                                <option value="{{ infraction.infraction_id }}" data-points="{{ infraction.points }}" data-expires_days="{{ infraction.expires_days }}"
+                                        {% if infraction.infraction_id == INFRACTION_TYPE %} selected {% endif %}>
+                                    {{ infraction.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </dd>
+                </dl>
+
+                <script>
+                     function changeDropBox() {
+                            var infc_id = parseInt($('#infraction').val());
+                            var infc_opt = $('#infraction').find('option:selected');
+                            if (infc_id > 0) {
+                                var exd = infc_opt.data('expires_days');
+                                var wrn = infc_opt.data('points');
+                                $('#title').val(infc_opt.text().trim()).attr('readonly', true);
+                                if (wrn) {
+                                    $('#points').val(exd).attr('disabled', false);
+                                    $('#give_warning').prop('checked', false);
+                                    $('#never_expire').val('').attr('disabled', false);
+                                } else {
+                                    $('#points').val('').attr('disabled', true);
+                                    $('#give_warning').prop('checked', true);
+                                    $('#never_expire').val('').attr('disabled', true);
+                                }
+                                if (exd) {
+                                    $('#expires_days').val(exd).attr('disabled', false);
+                                    $('#never_expire').prop('checked', false);
+                                } else {
+                                    $('#expires_days').val('').attr('disabled', true);
+                                    $('#never_expire').prop('checked', true);
+                                }
+                            } else {
+                                $('#title').val('').attr('readonly', false);
+                                $('#points').val('');
+                                $('#expires_days').val('');
+                            }
+                    }
+                     function giveWarning() {
+                         var exd = $('#give_warning').is(':checked');
+                             if (exd) {
+                                 $('#points').val('').attr('disabled', true);
+                                 $('#never_expire').prop('checked',true).attr('disabled', true);
+                                 $('#expires_days').val('').attr('disabled', true);
+                             } else {
+                                 $('#points').val('').attr('disabled', false);
+                                 $('#never_expire').prop('checked', false).attr('disabled', false);
+                                 $('#expires_days').val('').attr('disabled', false);
+                         }
+                     }
+                     function neverExpire() {
+                         var exd = $('#never_expire').is(':checked');
+                         if (exd) {
+                             $('#expires_days').val('').attr('disabled', true);
+                         } else {
+                             $('#expires_days').val('').attr('disabled', false);
+                         }
+                     }
+
+                </script>
+
+                <dl>
+                    <dt><label for="title">Title{L_COLON}</label></dt>
+                    <dd>
+                       <input id="title" name="title" type="text" value="{{ TITLE }}"  size="50" maxlength="50" style="text-align: left"/>{% if ERROR.title %}<span class="error">*</span>{% endif %}
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt><label for="points">Points (1-{MAX_INT}){L_COLON}</label>
+                        <br>
+                        <span>The number of Infraction Points which will be given to this user.</span>
+                    </dt>
+                    <dd>
+                        <input id="points" name="points" type="number"  {% if POINTS %} value="{{ POINTS }}"{% endif %} {% if GIVE_WARNING %} disabled=true {% endif %} min="1" />{% if ERROR.points %}<span class="error">*</span>{% endif %}
+                        <input type="checkbox" name="give_warning" id="give_warning" value="give_warning" {% if GIVE_WARNING %} checked {% endif %} onclick="giveWarning()"/><label for="give_warning">Give Warning</label><br>
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt><label for="expires_days">Expires In Days (1-{MAX_INT}){L_COLON}</label>
+                        <br>
+                        <span>Specify the number of the days that the Infraction Points will be applied to this user.</span>
+                    </dt>
+                    <dd>
+                        <input id="expires_days"  type="number" {% if EXPIRE_DAYS %} value="{{ EXPIRE_DAYS }}" {% endif %} min="1" name="expires_days" {% if NEVER_EXPIRE || GIVE_WARNING %} disabled=true {% endif %} />{% if ERROR.expire %}<span class="error">*</span>{% endif %}
+                        <input type="checkbox" name="never_expire" id="never_expire" value="never_expire" {% if NEVER_EXPIRE %} checked {% elseif GIVE_WARNING %} checked disabled=true {% endif %}
+                               onclick="neverExpire()"/><label for="never_expire">Never Expire</label><br>
+                    </dd>
+                </dl>
+                    <dl>
+                        <dt><label for="reason">Reason (Optional){L_COLON}</label>
+                            <br>
+                            <span>The user will receive a notification with this message attached.</span>
+                        </dt>
+                        <dd>
+                            <textarea class="inputbox" name="reason" id="reason" rows="3" placeholder="Enter a message..." maxlength="1500"
+                            >{{ REASON }}</textarea>
+                        </dd>
+                    </dl>
+            </fieldset>
+
+        </div>
+    </div>
+
+    <fieldset class="submit-buttons">
+        <input type="hidden" name="action" value="add_infraction" />
+        <input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp;
+        <input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+        {S_FORM_TOKEN}
+    </fieldset>
+
+    {% include "infractions_list.html" with { "infractions" : RECENT_INFRACTIONS, "display_user_links" : false, "show_cancel_col" : false, "header_name" : "User's 10 Most Recent Infractions " } only %}
+
+</form>
+
+<!-- INCLUDE mcp_footer.html -->

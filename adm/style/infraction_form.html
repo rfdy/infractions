@@ -1,0 +1,56 @@
+<!-- INCLUDE overall_header.html -->
+
+<a href="{U_ACTION}" style="float: {S_CONTENT_FLOW_END};">&laquo; {L_BACK}</a>
+
+<h1>{L_ACP_INF_MANAGER}</h1>  <br>
+
+<form id="acp_board" method="post" action="{U_ACTION}">
+	<fieldset>
+        <legend>{FORM_TITLE}</legend>
+
+        <dl>
+            <dt>
+                <label for="title">Title:</label>
+            </dt>
+            <dd>
+                <input id="title" maxlength="50" size="50" type="text" name="title" value="{{ infraction.title }}" required>
+                <span id="title_err" class="error">* {TITLE_ERR}</span>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="points">Points:</label>
+            </dt>
+            <dd>
+                <input id="points" type="number" name="points" min="0" max="65535" size="10" value="{{ infraction.points }}">
+                <span id="points_err" class="error">{POINTS_ERR}</span>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="expires_in_days">Expires In (Days):</label>
+                <br>
+                <span>If you want an infraction which never expires, set this to 0.</span>
+            </dt>
+            <dd>
+                <input id="expires_in_days" type="number" name="expires_days" min="0" max="65535" size="10" value="{{ infraction.expires_days }}">
+                <span id="expires_err" class="error">{EXPIRES_ERR}</span>
+            </dd>
+        </dl>
+
+		<p class="submit-buttons">
+            <input type="hidden" name="action" value="save" />
+            <input type="hidden" name="infraction_id" value="{{ infraction.infraction_id }}" />
+
+            <input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+		</p>
+		{S_FORM_TOKEN}
+        <br>
+        <p><i>Note:</i> If "Points" or "Expires In (Days)" are left empty, a default value of 0 will be used.</p>
+
+	</fieldset>
+</form>
+<!-- INCLUDE overall_footer.html -->

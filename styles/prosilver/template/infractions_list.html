@@ -1,0 +1,134 @@
+{#
+Available Template Variables:
+
+array infractions
+bool show_cancel_col
+bool display_user_links
+string header_name
+#}
+
+{#
+Getting error 
+Fatal error: Call to a member function append() on a non-object in C:\localdocs\phpBB3\cache\twig\14\30\9b3af9f10ec73e865740278224b03f214c0cd474a6f51f8b971dd6c9c62b.php on line 33
+
+by including this... revisit
+
+ INCLUDEJS @rfd_core/jquery.infractions.js
+#}
+
+<div class="panel">
+    <div class="inner">
+
+        <h3>{% if header_name %} {{ header_name }}
+        {% else %} List of Issued Infractions {% endif %}</h3>
+
+        {% if infractions %}
+            <ul class="linklist">
+                <li class="rightside pagination">
+                    <!-- IF TOTAL_INFRACTIONS -->{{ TOTAL_INFRACTIONS }} infractions &bull;  <!-- ENDIF -->
+                    <!-- IF .pagination -->
+                        <!-- INCLUDE pagination.html -->
+                    <!-- ELSE -->
+                        {PAGE_NUMBER}
+                    <!-- ENDIF -->
+                </li>
+            </ul>
+
+            <table class="table1">
+                <thead>
+                <tr>
+                    {% if display_user_links %}
+                        <th style="text-align: center;" class="name">Username</th>
+                    {% endif %}
+                    <th class="name">Moderator</th>
+                    <th class="name">Title</th>
+                    <th class="name">Points</th>
+                    <th class="name">Status</th>
+                    <th class="name">Created</th>
+                    <th class="name">Days</th>
+                    {% if show_cancel_col %}
+                    <th class="name">Cancel</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for user_infraction in infractions %}
+                <tr id="inf-{user_infraction.id}" class="{{ cycle(['bg1', 'bg2'], loop.index0) }}">
+                    {% if display_user_links %}
+                    <td style="text-align: center;">{{ user_infraction.username }}
+                        <a href="{user_infraction.view_infractions_link}">
+                            <img src="./../adm/images/icon_trace.gif" title="View this user's Infractions" alt="View User's Infractions"/>
+                        </a>
+                    </td>
+                    {% endif %}
+                    <td>{{ user_infraction.moderator_username }}</td>
+                    <td>{{ user_infraction.title }}</td>
+                    <td>
+                        {% if user_infraction.points %}
+                            {{ user_infraction.points }}
+                        {% else %}
+                            Warning
+                        {% endif %}
+                    </td>
+
+                    <td class="status">
+                        {% if user_infraction.status == constant('rfd\\infractions\\Service\\UserInfractionsManager::STATUS_ACTIVE') %}
+                        <strong>Active</strong>
+                        {% elseif user_infraction.status == constant('rfd\\infractions\\Service\\UserInfractionsManager::STATUS_EXPIRED') %}
+                        Expired
+                        {% elseif user_infraction.status == constant('rfd\\infractions\\Service\\UserInfractionsManager::STATUS_CANCELLED') %}
+                        Cancelled
+                        {% else %}
+                        Unknown Status
+                        {% endif %}
+                    </td>
+
+                    <td><span style="border-bottom: 1px dotted; cursor: help"  title="{{ user_infraction.date_created|date('M j, Y - g:i a T', false) }}">{{ user_infraction.date_created|date("M j, Y", false) }}</span></td>
+
+                    <td>{% if user_infraction.expires_days %}
+                            <span style="border-bottom: 1px dotted; cursor: help"  title="{{ user_infraction.date_created|date_modify(user_infraction.expires_days ~' day')|date('M j, Y') }}">{{ user_infraction.expires_days }}</span>
+                        {% else %}
+                            Never
+                        {% endif %}
+                    </td>
+
+                    {% if show_cancel_col %}
+                    <td>
+                        {% if user_infraction.status == 0 %}
+                        <a href="{{ user_infraction.cancel_url }}" data-ajax="infractions.cancel"><img title="Cancel" alt="Cancel" src="./../adm/images/icon_delete.gif"></a>
+                        {% else %}
+                        -
+                        {% endif %}
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <ul class="linklist">
+                <li class="rightside pagination">
+                    <!-- IF TOTAL_INFRACTIONS -->{TOTAL_INFRACTIONS} infractions &bull;  <!-- ENDIF -->
+                    <!-- IF .pagination -->
+                        <!-- INCLUDE pagination.html -->
+                    <!-- ELSE -->
+                        {PAGE_NUMBER}
+                    <!-- ENDIF -->
+                </li>
+            </ul>
+        {% else %}
+            <p><strong>No infractions exist.</strong></p>
+        {% endif %}
+    </div>
+</div>
+
+        <script>
+            window.onload = function() {
+
+                phpbb.addAjaxCallback('infractions.cancel', function(res) {
+                      $(this).parents('tr').find('td.status').text('Cancelled');
+                    $(this).parents('td').html('-');
+                });
+
+            };
+        </script>

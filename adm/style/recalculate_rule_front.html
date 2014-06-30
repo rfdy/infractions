@@ -1,0 +1,26 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>Recalculate Rule Penalties</h1>
+<p>You may make changes to Rules and wish to reapply the current Rules (i.e. any Rules currently in effect
+    will be reverted and then all new Rule penalties will be applied to users who have enough
+    non-expired points).</p>
+
+<form id="acp_board" method="post" action="{U_RECALCULATE}">
+    <fieldset>
+        <legend>Warning</legend>
+        <p>
+            <em>
+                This process <strong>cannot</strong> be undone! All currently applied Rule penalties will be
+                reverted (and users will be removed from the Target Groups of all Rule Penalties applied to them).
+                Then, all Rule penalties will be recalculated (and users will be placed in groups based on the current
+                Rules set).
+            </em>
+        </p>
+
+        <p class="submit-buttons">
+            <input class="button1" type="submit" id="reset_button" name="reset" value="Recalculate Rule Penalties" />
+        </p>
+        {S_FORM_TOKEN}
+    </fieldset>
+</form>
+<!-- INCLUDE overall_footer.html -->

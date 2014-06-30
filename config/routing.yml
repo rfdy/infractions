@@ -1,0 +1,3 @@
+demo_controller:
+    pattern: /infractions/{name}
+    defaults: { _controller: rfd.infractions.controller:handle }

@@ -1,0 +1,33 @@
+<!-- INCLUDE ucp_header.html -->
+
+<h2>Infractions issued to {USERNAME_FULL}</h2>
+
+<div class="panel">
+    <div class="inner">
+
+        <h3>{USERNAME_FULL}</h3>
+
+        <div>
+            <div class="column1">
+                <!-- IF AVATAR_IMG --><div>{AVATAR_IMG}</div><!-- ENDIF -->
+            </div>
+
+            <div class="column2">
+                <dl class="details">
+                    <!-- IF RANK_TITLE --><dt>{L_RANK}{L_COLON}</dt><dd>{RANK_TITLE}</dd><!-- ENDIF -->
+                    <!-- IF RANK_IMG --><dt><!-- IF RANK_TITLE -->&nbsp;<!-- ELSE -->{L_RANK}{L_COLON}<!-- ENDIF --></dt><dd>{RANK_IMG}</dd><!-- ENDIF -->
+                    <dt>{L_JOINED}{L_COLON}</dt><dd>{JOINED}</dd>
+                    <dt>{L_TOTAL_POSTS}{L_COLON}</dt><dd>{POSTS}</dd>
+                    <dt>Infraction Points{L_COLON}</dt><dd>{INFRACTION_POINTS} {% if U_ISSUE %} [ <a href="{U_ISSUE}">Issue New Infraction</a> ] {% endif %}</dd>
+
+                </dl>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% include "infractions_list.html" with { "infractions" : USER_INFRACTIONS, "display_user_links" : false, "show_cancel_col" : false } %}
+
+
+<!-- INCLUDE ucp_footer.html -->

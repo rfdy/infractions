@@ -1,0 +1,47 @@
+imports:
+    - { resource: parameters.yml }
+
+services:
+    infractions.listener:
+        class: rfd\infractions\Event\main_listener
+        arguments:
+            - @auth
+            - %core.root_path%
+            - %core.php_ext%
+            - @user
+        tags:
+            - { name: event.listener }
+
+    infractions.infraction_manager:
+        class: rfd\infractions\Service\InfractionManager
+        arguments:
+            - @dbal.conn
+            - { infractions: %tables.infractions%, rules: %tables.infraction_rules% }
+
+    infractions.rules_manager:
+        class: rfd\infractions\Service\InfractionRulesManager
+        arguments:
+            - @dbal.conn
+            - { rules: %tables.infraction_rules% }
+
+    infractions.user_infractions_manager:
+        class: rfd\infractions\Service\UserInfractionsManager
+        arguments:
+            - @infractions.rules_manager
+            - @dbal.conn
+            - { inf_users: %tables.infractions_users%, group_applied: %tables.groups_applied% }
+
+    cron.task.core.prune_infractions:
+        class: rfd\infractions\cron\task\core\prune_infractions
+        arguments:
+            - @infractions.user_infractions_manager
+            - @request
+            - @config
+            - @dbal.conn
+        calls:
+            - [set_name, [cron.task.core.prune_infractions]]
+        tags:
+            - { name: cron.task }
+
+
+

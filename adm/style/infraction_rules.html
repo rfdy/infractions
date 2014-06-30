@@ -1,0 +1,71 @@
+<!-- INCLUDE overall_header.html -->
+
+<a href="{U_ACTION}" style="float: {S_CONTENT_FLOW_END};">&laquo; {L_BACK}</a>
+
+<h1>Infraction Rules</h1>
+
+{#  This is a Twig comment to remind me to use an array for the errors
+    {% if TITLE_ERR || POINTS_ERR || EXPIRES_ERR %}
+    <div class="errorbox">
+    <h3>{{ L_WARNING }}</h3>
+    {% if TITLE_ERR %}
+        <p>{{ TITLE_ERR }}</p>
+    {% endif *}
+    {% if POINTS_ERR %}
+        <p>{{ POINTS_ERR }}</p>
+    {% endif *}
+    {% if TITLE_ERR %}
+        <p>{{ EXPIRES_ERR }}</p>
+    {% endif %}
+    </div>
+    {% endif %}
+#}
+
+<form id="acp_board" method="post" action="{U_ACTION}">
+    <fieldset>
+		<legend>Edit Infraction Rule</legend>
+
+		<p>System groups cannot be used as rules.</p>
+
+        <dl>
+			<dt><label for="points">Points:</label></dt>
+			<dd><input type="number" min="1" name="points" value="{{ DEFAULT_RULE.point_level }}" id="points"><span class="error">* {POINTS_ERR}</span></dd>
+		</dl>
+
+        <dl>
+			<dt><label for="group">Target Group:</label></dt>
+			<dd>
+				<select name="group" id="group">
+				{% for group in GROUPS %}
+                    {% if group.group_type != 3 %}
+					    <option value="{{ group.group_id }}" {% if DEFAULT_RULE.group_id == group.group_id %}selected{% endif %}>{{ group.group_name }}</option>
+                    {% endif %}
+				{% endfor %}
+            	</select>
+			</dd>
+		</dl>
+
+        <dl>
+			<dt><label for="rank_yes">Use Rank:</label>
+                <br>
+                <span>If the specified group has a special rank set then <em>Use Rank</em> will assign that rank to the user when the rule is applied.</span>
+            </dt>
+			<dd>
+            	<input type="radio" class="radio" id="rank_yes" name="use_rank" value="1" {% if DEFAULT_RULE.use_rank %}checked{% endif %} id="rank_yes"><label for="rank_yes">{L_YES}</label>
+             	&nbsp;
+            	<input type="radio" class="radio" id="rank_no" name="use_rank" value="0" {% if !DEFAULT_RULE.use_rank %}checked{% endif %} id="rank_no"><label for="rank_no">{L_NO}</label>
+			</dd>
+		</dl>
+
+        <p class="submit-buttons">
+            <input type="hidden" name="action" value="save" />
+            <input type="hidden" name="id" value="{{ DEFAULT_RULE.point_level }}">
+
+            <input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}">&nbsp;
+            <input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}">
+        </p>
+        {S_FORM_TOKEN}
+
+    </fieldset>
+</form>
+<!-- INCLUDE overall_footer.html -->

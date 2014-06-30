@@ -1,0 +1,5 @@
+parameters:
+    tables.infractions: %core.table_prefix%infractions
+    tables.infraction_rules: %core.table_prefix%infraction_rules
+    tables.infractions_users: %core.table_prefix%infractions_users
+    tables.groups_applied: %core.table_prefix%infr_user_rules

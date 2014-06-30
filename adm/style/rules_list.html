@@ -1,0 +1,49 @@
+<!-- INCLUDE overall_header.html -->
+<h1>{L_ACP_RULE_MANAGER}</h1>
+	<p>Infraction rules can be created to automatically add a user to a group when an infraction with points is issued to a user.
+		When creating an infraction the <em>points</em> level must be unique, such that only a single rule can be applied at a specified number of points. Once infractions expire and the number of
+	points is reduced past the rules <em>points</em> the user will automatically be removed from that group.</p>
+
+	<p>Editing an existing rule does not apply to users who already have infraction points. To reassign users to groups, use the recalculate button.</p>
+
+	<p>Rules can only assign non-system groups to users, so such groups must be created first.</p>
+
+<form id="acp_rules" method="post" action="{U_ADD}">
+<fieldset class="tabulated">
+    <legend>{L_ACP_MANAGE_RULES}</legend>
+    <table class="table1 responsive">
+        <thead>
+        <tr>
+            <th style="width: 25%">Points</th>
+            <th>Override Usergroup</th>
+            <th>Use Rank</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for rule in RULES %}
+                <tr>
+                    <td><strong>{{ rule.point_level }}</strong></td>
+                    <td>{{ rule.group_id }}</td>
+                    <td>{% if rule.use_rank == 1 %} Yes {% else %} - {% endif %}</td>
+                    <td><a href="{{ rule.edit_url }}"><img title="Edit" alt="Edit" src="./../adm/images/icon_edit.gif"></a>
+                        <a data-ajax="row_delete" href="{{ rule.delete_url }}"><img title="Delete" alt="Delete" src="./../adm/images/icon_delete.gif"></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td style="text-align: center;" colspan="4">There are no created Rules.</td>
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+    <p class="quick">
+        <input class="button2" name="add" type="submit" value="{L_ADD_NEW_RULE}" />
+        {S_FORM_TOKEN}
+    </p>
+
+</fieldset>
+</form>
+<!-- INCLUDE overall_footer.html -->

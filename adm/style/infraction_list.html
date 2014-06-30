@@ -1,0 +1,47 @@
+<!-- INCLUDE overall_header.html -->
+<h1>{L_ACP_INF_MANAGER}</h1>
+	<p>You can manage the default infractions that can be applied to users.</p>
+
+<form id="acp_infractions" method="post" action="{U_ADD}">
+<fieldset class="tabulated">
+    <legend>{L_ACP_MANAGE_INFRACTIONS}</legend>
+    <table class="table1 zebra-table">
+        <thead>
+        <tr>
+            <th style="width: 50%">Title</th>
+            <th>Points</th>
+            <th>Expires In (Days)</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for infraction in infractions %}
+                <tr>
+                    <td>{{ infraction.title }}</td>
+                    <td style="text-align: center;">{{ infraction.points }}</td>
+                    <td style="text-align: center;">
+                        {% if not infraction.expires_days %}
+                            Never
+                        {% else %}
+                            {{ infraction.expires_days }}
+                        {% endif %}
+                    </td>
+                    <td style="text-align: center;"><a href="{{ infraction.edit_url }}"><img title="Edit" alt="Edit" src="./../adm/images/icon_edit.gif"></a>
+                        <a data-ajax="row_delete" href="{{ infraction.delete_url }}"><img title="Delete" alt="Delete" src="./../adm/images/icon_delete.gif"></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td style="text-align: center;" colspan="4">There are no Infractions.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p class="quick">
+        <input class="button2" name="add" id="add_button" type="submit" value="{L_ADD_NEW_INFRACTION}">
+        {S_FORM_TOKEN}
+    </p>
+</fieldset>
+</form>
+<!-- INCLUDE overall_footer.html -->

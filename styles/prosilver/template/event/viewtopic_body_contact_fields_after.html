@@ -1,0 +1,5 @@
+{% if postrow.INFRACTION_POINTS is defined %}
+    <dd id="post_row_infraction_points"><strong>Infractions{L_COLON}</strong>
+        {postrow.INFRACTION_POINTS} Active Point{% if postrow.INFRACTION_POINTS != 1 %}s{% endif %}
+    </dd>
+{% endif %}
