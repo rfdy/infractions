@@ -8,8 +8,9 @@ Installation instructions
 - create $phpbb_root/ext/rfd folder
 - cd $phpbb_root/ext/rfd
 - git clone https://github.com/rfdy/infractions.git
-- Edit $phpbb_root/ext/rfd/infractions/language/en/common.php, set FORUM_NAME and RULES_URL to meaningful values for your forum
-- Go to admin panel -> customize -> extensions -> install infractions
+- Go to admin panel -> customize -> extensions. Click on Enable for infractions
+- Go to user and groups -> infractions. Set rules URL to the correct value (used in the PM sent on an infraction)
+- Make sure your site name is set in General -> Board settings
 
 Permissions
 -----------

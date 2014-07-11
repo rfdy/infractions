@@ -89,9 +89,13 @@ class main_module
                 $infractions[$key] = $infraction;
             }
 
+            global $config;
+
             $template->assign_vars(array(
                 'infractions'              => $infractions,
                 'U_ADD'                    => $this->u_action . "&amp;action=add",
+                'rules_url'                => $config['phpbb_infractions_rules_url'],
+                'U_RULES_URL_UPDATE'                    => $this->u_action . "&amp;action=rules_url_update",
             ));
 
             // -- edit view a single infraction
@@ -192,6 +196,11 @@ class main_module
                     ));
                 }
             }
+        } else if ($action == 'rules_url_update') {
+            global $phpbb_container;
+            $phpbb_container->get('config')->set('phpbb_infractions_rules_url',$request->variable('rules_url', 'http://www.unknown.com'));
+
+            trigger_error("Rules url has been updated" . adm_back_link($this->u_action));
         } else {
             trigger_error("Unknown Action!" . adm_back_link($this->u_action));
         }

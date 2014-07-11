@@ -26,6 +26,7 @@ $lang = array_merge($lang, array(
     'ACP_RULE_SAVED'                 => 'Rule has been saved successfully!',
     'ACP_SAVE_DUPLICATE'             => 'Duplicate: Rule already exists',
     'ADD_NEW_INFRACTION'             => 'Add New Infraction',
+    'UPDATE_INFRACTIONS_RULES_URL'   => 'Update rules URL',
     'ADD_NEW_RULE'                   => 'Add New Rule',
     'ACL_A_INFRACTIONS'              => 'Can manage infractions and rules',
     'ACL_CAT_INFRACTIONS'            => 'Infractions',

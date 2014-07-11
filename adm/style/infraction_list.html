@@ -44,4 +44,15 @@
     </p>
 </fieldset>
 </form>
+
+<form id="acp_infractions_rules_url" method="post" action="{U_RULES_URL_UPDATE}">
+    <fieldset class="tabulated">
+
+        <p class="quick">
+            <input id="rules_url" maxlength="50" size="50" type="text" name="rules_url" value="{{ rules_url }}" required>
+            <input class="button2" name="add" id="add_button" type="submit" value="{L_UPDATE_INFRACTIONS_RULES_URL}">
+            {S_FORM_TOKEN}
+        </p>
+    </fieldset>
+</form>
 <!-- INCLUDE overall_footer.html -->
