@@ -7,7 +7,7 @@ Installation instructions
 --------------------------
 - create $phpbb_root/ext/rfd folder
 - cd $phpbb_root/ext/rfd
-- git clone https://github.com/lucifer4o/infractions.git
+- git clone https://github.com/rfdy/infractions.git
 - Edit $phpbb_root/ext/rfd/infractions/language/en/common.php, set FORUM_NAME and RULES_URL to meaningful values for your forum
 - Go to admin panel -> customize -> extensions -> install infractions
 

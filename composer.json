@@ -17,6 +17,9 @@
         "phpbb/phpbb": "3.1.*@dev"
     },
     "extra": {
-        "display-name": "Infractions"
+        "display-name": "Infractions",
+        "soft-require": {
+            "phpbb/phpbb": "3.1.*@dev"
+        }
     }
 }

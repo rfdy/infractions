@@ -10,9 +10,9 @@ if (empty($lang) || !is_array($lang))
 	$lang = array();
 }
 
-//Please change me
-const FORUM_NAME="THIS IS MY FORUM";
-const RULES_URL="http://www.myphpbbforum.com/rules";
+global $config;
+$FORUM_NAME_TO_REPLACE_INFRACTIONS=$config['sitename'];
+$RULES_URL_TO_REPLACE_INFRACTIONS=$config['phpbb_infractions_rules_url'];
 
 $lang = array_merge($lang, array(
 	'ACP_DEMO_GOODBYE'			     => 'Should say goodbye?',
@@ -42,29 +42,29 @@ $lang = array_merge($lang, array(
     'LOG_ISSUED_INFRACTION'	         => '<strong>Issued User Infraction</strong><br />» %s',
     'LOG_CANCELLED_INFRACTION'	     => '<strong>Cancelled User Infraction</strong>',
     'INFRACTION_PM_BODY_USER'        => 'Dear %s, </br>
-                                         You have received an infraction at '.FORUM_NAME.' Forums. </br></br>
+                                         You have received an infraction at '.$FORUM_NAME_TO_REPLACE_INFRACTIONS.' Forums. </br></br>
                                          <strong>Infraction:</strong> %s </br>
                                          <strong>Reason:</strong> %s </br></br>
                                          This infraction is worth %s point(s) and may result in restricted access until it expires. Serious infractions will never expire. </br>
                                          <strong>Your infraction history is only visible to you and the moderation team.</strong></br>
                                          Please review the rules so you can avoid future violations: </br>
-                                         '.RULES_URL.' </br>
+                                         '.$RULES_URL_TO_REPLACE_INFRACTIONS.' </br>
                                          Only an administrator can reverse an infraction and it is only done if an infraction was given in error. Private message <strong>admin</strong> if you believe an error has occured. </br>
                                          All the best, </br>
-                                         '.FORUM_NAME.' Forums',
+                                         '.$FORUM_NAME_TO_REPLACE_INFRACTIONS.' Forums',
     'INFRACTION_PM_BODY_POST'        => 'Dear %s, </br>
-                                         You have received an infraction at '.FORUM_NAME.' Forums. </br></br>
+                                         You have received an infraction at '.$FORUM_NAME_TO_REPLACE_INFRACTIONS.' Forums. </br></br>
                                          <strong>Infraction:</strong> %s </br>
                                          <strong>Reason:</strong> %s </br>
                                          This infraction is worth %s point(s) and may result in restricted access until it expires. Serious infractions will never expire. </br>
                                          <strong>Your infraction history is only visible to you and the moderation team.</strong></br>
                                          Please review the rules so you can avoid future violations: </br>
-                                         '.RULES_URL.' </br>
+                                         '.$RULES_URL_TO_REPLACE_INFRACTIONS.' </br>
                                          Only an administrator can reverse an infraction and it is only done if an infraction was given in error. Private message <strong>admin</strong> if you believe an error has occured. </br>
                                          Original Post: </br>
                                          %s </br>
                                          <blockquote>%s</blockquote> </br>
                                          All the best, </br>
-                                         '.FORUM_NAME.' Forums',
-    'INFRACTION_PM_SUBJECT'     =>      'You have received an infraction at '.FORUM_NAME.' Forums',
+                                         '.$FORUM_NAME_TO_REPLACE_INFRACTIONS.' Forums',
+    'INFRACTION_PM_SUBJECT'     =>      'You have received an infraction at '.$FORUM_NAME_TO_REPLACE_INFRACTIONS.' Forums',
 ));

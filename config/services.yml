@@ -15,20 +15,20 @@ services:
     infractions.infraction_manager:
         class: rfd\infractions\Service\InfractionManager
         arguments:
-            - @dbal.conn
+            - @dbal.conn.driver
             - { infractions: %tables.infractions%, rules: %tables.infraction_rules% }
 
     infractions.rules_manager:
         class: rfd\infractions\Service\InfractionRulesManager
         arguments:
-            - @dbal.conn
+            - @dbal.conn.driver
             - { rules: %tables.infraction_rules% }
 
     infractions.user_infractions_manager:
         class: rfd\infractions\Service\UserInfractionsManager
         arguments:
             - @infractions.rules_manager
-            - @dbal.conn
+            - @dbal.conn.driver
             - { inf_users: %tables.infractions_users%, group_applied: %tables.groups_applied% }
 
     cron.task.core.prune_infractions:
@@ -37,7 +37,7 @@ services:
             - @infractions.user_infractions_manager
             - @request
             - @config
-            - @dbal.conn
+            - @dbal.conn.driver
         calls:
             - [set_name, [cron.task.core.prune_infractions]]
         tags:

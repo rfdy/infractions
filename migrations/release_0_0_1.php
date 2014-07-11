@@ -101,6 +101,7 @@ class release_0_0_1 extends \phpbb\db\migration\migration {
         return array(
             // Config values
             array('config.add', array('phpbb_infractions_version', '0.0.1')),
+            array('config.add', array('phpbb_infractions_rules_url', 'http://therules.com')),
 
             // permissions
 			array('permission.add', array('a_infractions', true)),
