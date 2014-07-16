@@ -81,25 +81,21 @@
                                 var wrn = infc_opt.data('points');
                                 $('#title').val(infc_opt.text().trim()).attr('readonly', true);
                                 if (wrn) {
-                                    $('#points').val(exd).attr('disabled', false);
-                                    $('#give_warning').prop('checked', false);
-                                    $('#never_expire').val('').attr('disabled', false);
+                                    $('#give_warning').prop('checked', true).click();
+                                    $('#points').val(wrn).attr('disabled', false);
+                                    if (exd) {
+                                        $('#expires_days').val(exd).attr('disabled', false);
+                                        $('#never_expire').prop('checked', false);
+                                    } else {
+                                        $('#expires_days').val('').attr('disabled', true);
+                                        $('#never_expire').prop('checked', true);
+                                    }
                                 } else {
-                                    $('#points').val('').attr('disabled', true);
-                                    $('#give_warning').prop('checked', true);
-                                    $('#never_expire').val('').attr('disabled', true);
-                                }
-                                if (exd) {
-                                    $('#expires_days').val(exd).attr('disabled', false);
-                                    $('#never_expire').prop('checked', false);
-                                } else {
-                                    $('#expires_days').val('').attr('disabled', true);
-                                    $('#never_expire').prop('checked', true);
+                                    $('#give_warning').prop('checked', false).click();
                                 }
                             } else {
                                 $('#title').val('').attr('readonly', false);
-                                $('#points').val('');
-                                $('#expires_days').val('');
+                                $('#give_warning').prop('checked', true).click();
                             }
                     }
                      function giveWarning() {
